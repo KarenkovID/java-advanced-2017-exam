@@ -90,8 +90,8 @@ public class StatisticsAnalyzerConsole implements StatisticsAnalyzer {
     }
 
     /**
-     * @param name name, where core is registed
-     * @param port port, where core is registed
+     * @param name name, where core is resisted
+     * @param port port, where core is resisted
      * @throws RemoteException if the registry could not be exported or if remote communication with the
      * registry failed
      * @throws NotBoundException if <code>name</code> is not currently bound
@@ -120,10 +120,6 @@ public class StatisticsAnalyzerConsole implements StatisticsAnalyzer {
      * @throws IOException  If an I/O error occurs
      *
      * @see CSVWriter
-     * @see String
-     * @see FileNotFoundException
-     * @see UnsupportedEncodingException
-     * @see IOException
      */
     public void write(String path) throws FileNotFoundException, UnsupportedEncodingException, IOException {
         try (
@@ -140,7 +136,7 @@ public class StatisticsAnalyzerConsole implements StatisticsAnalyzer {
      * Get last n string from core, which was in requests
      *
      * @param n count of last String
-     * @return List of last n String from requests from core
+     * @return {@link List<String>} of last n String from requests from core
      */
     @Override
     public List<String> topRequests(int n) {

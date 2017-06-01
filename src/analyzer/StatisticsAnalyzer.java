@@ -10,8 +10,9 @@ public interface StatisticsAnalyzer extends Remote {
 
     /**
      * Get last n string from core, which was in requests
+     *
      * @param n count of last String
-     * @return List of last n String from requests from core
+     * @return {@link List<String>} of last n String from requests from core
      */
     List<String> topRequests(int n);
 

@@ -27,11 +27,12 @@ public class CSVWriter implements AutoCloseable {
 
 
     /**
-     * @param values return
+     * Get values and write in one row all values toString
+     * @param values which values should be write
      * @throws IOException when writer throw IOException
      * @see IOException
-     * @see Object
      * @see List
+     * @see Object#toString()
      */
     public void write(List<Object> values) throws IOException {
         for (Object o : values) {
