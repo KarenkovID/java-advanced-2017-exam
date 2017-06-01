@@ -7,12 +7,14 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.*;
 
 /**
  * implementation of {@link Core}
  */
-public class CoreImpl implements Core, Serializable {
+public class CoreImpl extends UnicastRemoteObject implements Core, Serializable {
     private static final String FILE_NAME = "string_base.txt";
 
     @NotNull
@@ -20,7 +22,8 @@ public class CoreImpl implements Core, Serializable {
     @NotNull
     private TreeSet<String> stringsSet;
 
-    CoreImpl() throws CoreException {
+    CoreImpl(int port) throws CoreException, RemoteException {
+        super(port);
         stringsSet = getDataFromFile();
         lastRequests = new LinkedList<>();
     }
