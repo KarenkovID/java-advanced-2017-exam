@@ -41,7 +41,7 @@ public interface Core extends Remote{
     boolean[] includes(List<String> strings) throws RemoteException;
 
     /**
-     * Return list contains of {@link String} that contains info about last command in format :
+     * Return list contains from start server of {@link String} that contains info about last command in format :
      * method_name + " " + method_arg (if exist)
      * @return last request list
      * @throws RemoteException if was error during remote accessing
