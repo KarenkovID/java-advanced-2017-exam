@@ -1,6 +1,7 @@
 package analyzer;
 
 import java.rmi.Remote;
+import java.rmi.RemoteException;
 import java.util.List;
 
 /**
@@ -14,7 +15,7 @@ public interface StatisticsAnalyzer extends Remote {
      * @param n count of last String
      * @return {@link List<String>} of last n String from requests from core
      */
-    List<String> topRequests(int n);
+    List<String> topRequests(int n) throws RemoteException;
 
     /**
      * Run StatisticsAnalyzer for user, which can be used from console

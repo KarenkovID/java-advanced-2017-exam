@@ -59,7 +59,13 @@ public class StatisticsAnalyzerConsole implements StatisticsAnalyzer {
                             System.out.println("Invalid count");
                             return;
                         }
-                        lastResult = topRequests(count);
+                        List<String> result;
+                        try {
+                            result = topRequests(count);
+                            lastResult = result;
+                        } catch (RemoteException e) {
+                            System.out.println(e.getMessage());
+                        }
                         break;
                     case "write":
                         try {
@@ -139,7 +145,7 @@ public class StatisticsAnalyzerConsole implements StatisticsAnalyzer {
      * @return {@link List<String>} of last n String from requests from core
      */
     @Override
-    public List<String> topRequests(int n) {
+    public List<String> topRequests(int n) throws RemoteException {
         List<String> result = new ArrayList<>();
         Set<String> resultImpl = new HashSet<>();
         List<String> requests = core.getLastRequests();
