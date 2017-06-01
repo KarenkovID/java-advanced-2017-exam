@@ -47,5 +47,15 @@ public class Server {
                     e.getMessage());
             e.printStackTrace();
         }
+        try {
+            while (!Thread.interrupted()) {
+                synchronized (core) {
+                    core.wait();
+                }
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
+
 }
