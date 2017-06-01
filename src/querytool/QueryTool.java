@@ -53,8 +53,12 @@ public class QueryTool {
      * Show all information about inclusion List of String <code> data</code>
      * @param data List of String, what we want to acknowledge inclusion
      */
-    public void showInclusion(List<String> data) throws RemoteException, NotBoundException {
-        showQuery(data, queryBool(data));
+    public void showInclusion(List<String> data) throws NotBoundException {
+        try {
+            showQuery(data, queryBool(data));
+        } catch (RemoteException e) {
+            System.err.println("Error with Server");
+        }
     }
 
     /**
