@@ -9,6 +9,9 @@ import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import java.text.ParseException;
 import java.util.List;
 
 /**
@@ -23,15 +26,13 @@ public class Editor {
      * @param url is url of core
      * @param port is port of core
      */
-    public void run(String url, String port) {
+    public void run(String url, int port) {
         br = new BufferedReader(new InputStreamReader(System.in));
         try {
-            core = (Core) Naming.lookup("//" + url + ":" + port + "/string_manager");
+            Registry registry = LocateRegistry.getRegistry(port);
+            core = (Core) registry.lookup("//" + url + "/string_manager");
         } catch (NotBoundException | RemoteException e) {
             System.err.println("Cannot connect to core");
-            return;
-        } catch (MalformedURLException e) {
-            System.err.println("Core URL is invalid");
             return;
         }
         System.err.print("Enter \"add $s\" to add string $s\n" +
@@ -71,9 +72,9 @@ public class Editor {
      */
     public static void main(String[] args) throws Exception {
         if (args.length == 2) {
-            new Editor().run(args[0], args[1]);
+            new Editor().run(args[0], Integer.parseInt(args[1]));
         } else {
-            new Editor().run("localhost", "4445");
+            new Editor().run("localhost", 4445);
         }
     }
 }
