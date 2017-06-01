@@ -140,6 +140,7 @@ public class StatisticsAnalyzerConsole implements StatisticsAnalyzer {
      * @see CSVWriter
      */
     public void write(String path) throws FileNotFoundException, UnsupportedEncodingException, IOException {
+        if (lastResult == null) return;
         try (
                 CSVWriter csvWriter = new CSVWriter
                         (new OutputStreamWriter(new FileOutputStream(path), "UTF-8"));
@@ -147,6 +148,7 @@ public class StatisticsAnalyzerConsole implements StatisticsAnalyzer {
             for (int i = 0; i < lastResult.size(); i++) {
                 csvWriter.write(Arrays.asList(i + 1, lastResult.get(i)));
             }
+            csvWriter.close();
         }
     }
 
