@@ -12,7 +12,7 @@ import java.util.*;
 /**
  * implementation of {@link Core}
  */
-public class CoreImpl implements Core {
+public class CoreImpl implements Core, Serializable {
     private static final String FILE_NAME = "string_base.txt";
 
     @NotNull
