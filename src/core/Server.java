@@ -3,13 +3,15 @@ package core;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 
 /**
  * Created by karen on 01.06.2017.
  */
 public class Server {
     public static void main(String[] args) {
+
         final CoreImpl core;
         try {
             core = new CoreImpl();
@@ -38,13 +40,12 @@ public class Server {
                 System.err.println("Invalid second argument, mast be number");
                 return;
             }
-            UnicastRemoteObject.exportObject(core, port);
-            Naming.rebind("//" + args[0] + "/string_manager", core);
+            Registry registry = LocateRegistry.createRegistry(port);
+            registry.rebind("//" + args[0] + "/string_manager", core);
         } catch (RemoteException e) {
             System.out.println("Cannot export object: " +
                     e.getMessage());
-        } catch (MalformedURLException e) {
-            System.out.println("Malformed URL");
+            e.printStackTrace();
         }
     }
 }
