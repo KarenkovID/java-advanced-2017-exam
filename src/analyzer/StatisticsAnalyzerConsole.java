@@ -48,13 +48,22 @@ public class StatisticsAnalyzerConsole implements StatisticsAnalyzer {
                 BufferedReader input = new BufferedReader(new InputStreamReader(System.in, "UTF-8"))
         ) {
             boolean shouldExit = false;
+            System.out.println("No such command");
+            System.out.println("Use:");
+            System.out.println("\ttop <n>");
+            System.out.println("\twrite <file>");
+            System.out.println("\texit");
             while (!shouldExit) {
                 String inputCommand = input.readLine();
                 StringTokenizer tokenizer = new StringTokenizer(inputCommand);
+                if (tokenizer.countTokens() < 2) {
+                    tokenizer = new StringTokenizer("null null");
+                }
                 String command = tokenizer.nextToken();
+                String additional = tokenizer.nextToken();
                 switch (command) {
                     case "top":
-                        int count = getInteger(tokenizer.nextToken());
+                        int count = getInteger(additional);
                         if (count == -1) {
                             System.out.println("Invalid count");
                             return;
@@ -63,13 +72,16 @@ public class StatisticsAnalyzerConsole implements StatisticsAnalyzer {
                         try {
                             result = topRequests(count);
                             lastResult = result;
+                            for (String s: lastResult) {
+                                System.out.println(s);
+                            }
                         } catch (RemoteException e) {
                             System.out.println(e.getMessage());
                         }
                         break;
                     case "write":
                         try {
-                            write(tokenizer.nextToken());
+                            write(additional);
                         } catch (FileNotFoundException e) {
                             System.out.println("File not found");
                         } catch (UnsupportedEncodingException e) {
@@ -103,8 +115,8 @@ public class StatisticsAnalyzerConsole implements StatisticsAnalyzer {
      * @throws NotBoundException if <code>name</code> is not currently bound
      */
     public StatisticsAnalyzerConsole(String name, int port) throws RemoteException, NotBoundException {
-        Registry registry = LocateRegistry.createRegistry(port);
-        core = (Core) registry.lookup(name);
+        Registry registry = LocateRegistry.getRegistry(port);
+        core = (Core) registry.lookup("//" + name + "/string_manager");
     }
 
     private static int getInteger(String arg) {
